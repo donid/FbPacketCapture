@@ -23,3 +23,5 @@ If they don't have these permissions, Wireshark will show a Dialog with this err
 If you want to delete your saved credentials use 'cmdkey /delete:FbPacketCapture_User_FritzBox' in a console window.
 ('cmdkey /list' shows all saved credentials)
 Alternatively you can use 'control keymgr.dll' on a command-line to show Windows Credential Manager and choose 'Windows Credentials'.
+
+![build workflow](https://github.com/donid/FbPacketCapture/actions/workflows/dotnet.yml/badge.svg)
