@@ -20,6 +20,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore --configuration Release src\FritzboxPacketCapture.sln
+      run: dotnet build --configuration Release src\FritzboxPacketCapture.sln
     - name: Test
       run: dotnet test --no-build --verbosity normal
