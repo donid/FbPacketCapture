@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FbPacketCapture", "FbPacketCapture\FbPacketCapture.csproj", "{FAA054A2-38C4-45D2-A41B-74FAB800CD0C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E0C2BBCC-0E00-4DF3-938E-3788A730CBF0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{B0E37293-CD11-4401-98FD-7D3026321153}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAA054A2-38C4-45D2-A41B-74FAB800CD0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAA054A2-38C4-45D2-A41B-74FAB800CD0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAA054A2-38C4-45D2-A41B-74FAB800CD0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAA054A2-38C4-45D2-A41B-74FAB800CD0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0E37293-CD11-4401-98FD-7D3026321153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0E37293-CD11-4401-98FD-7D3026321153}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0E37293-CD11-4401-98FD-7D3026321153}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0E37293-CD11-4401-98FD-7D3026321153}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9231227C-D6F8-4B3A-A3AE-42B9D9204F15}
+	EndGlobalSection
+EndGlobal

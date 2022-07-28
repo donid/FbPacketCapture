@@ -1,0 +1,28 @@
+﻿folgendes sind die namen in der fritz capture weboberflaeche und die value-strings sind die values,
+die man mit dem F12 inspektor als value auf dem start-button findet - das sind die 'interfaceName's
+	getestet mit: 7390 OS 06.84
+
+"Internet" - schnittstellen
+	text: "1. Internetverbindung" interfaceName: "2-1" - angebotener filename ...-vcc0
+	text: "Schnittstelle 0 ('internet')" interfaceName: "3-17" - angebotener filename ...-vcc16
+	text: "Schnittstelle 1 ('iptv')" interfaceName: "3-18"  - angebotener filename ...-vcc17
+	text: "Routing-Schnittstelle" interfaceName: "3-0" - angebotener filename ...-ip
+
+"Netzwerkschnittstellen"
+	text: "eth0"	interfaceName: "1-eth0"
+	text: "lan"		interfaceName: "1-lan"
+	text: "wifi0"	interfaceName: "1-wifi0"
+	text: "wifi1"	interfaceName: "1-wifi1"
+	text: "ath1"	interfaceName: "1-ath1"
+	text: "ath0"	interfaceName: "1-ath0"
+	text: "vdsl"	interfaceName: "1-vdsl"
+	text: "eoam"	interfaceName: "1-eoam"
+
+"WLAN"
+	text: "AP2 (2.4GHz, ath0) - Schnittstelle 1" interfaceName: "4-138"
+	...
+
+
+"USB"
+	text: "usb2" interfaceName: "5-162"
+	text: "usb1" interfaceName: "5-161"
