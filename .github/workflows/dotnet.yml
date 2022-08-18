@@ -20,7 +20,7 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release src\FbPacketCapture.sln
     - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
+      uses: actions/upload-artifact@v3
       with:
-        name: upload release-build artifacts
+        name: FbPacketCapture_release_${{ github.sha }}
         path: src\FbPacketCapture\bin\Release\net6.0
