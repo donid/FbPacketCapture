@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{B0E37293-CD11-4401-98FD-7D3026321153}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FboxSharp", "FboxSharp\FboxSharp.csproj", "{748A3C3C-F0B8-42D1-932D-AFA98D14706B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{B0E37293-CD11-4401-98FD-7D3026321153}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0E37293-CD11-4401-98FD-7D3026321153}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0E37293-CD11-4401-98FD-7D3026321153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{748A3C3C-F0B8-42D1-932D-AFA98D14706B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{748A3C3C-F0B8-42D1-932D-AFA98D14706B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{748A3C3C-F0B8-42D1-932D-AFA98D14706B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{748A3C3C-F0B8-42D1-932D-AFA98D14706B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

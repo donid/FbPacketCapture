@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace FbPacketCapture
+namespace FboxSharp
 {
 
 	[DataContract(Namespace = "", Name = "SessionInfo")]
@@ -36,7 +36,7 @@ namespace FbPacketCapture
 			SessionInfo? info = serializer.ReadObject(stream) as SessionInfo;
 			if (info == null)
 			{
-				throw new ApplicationException("SessionInfo.Deserialize returned 'null'");
+				throw new FboxSharpException("SessionInfo.Deserialize returned 'null'");
 			}
 			return info;
 		}
