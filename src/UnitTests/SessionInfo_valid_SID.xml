@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SessionInfo>
+	<SID>6397962523294193</SID>
+	<Challenge>f8fb371e</Challenge>
+	<BlockTime>0</BlockTime>
+	<Rights>
+		<Name>Dial</Name>
+		<Access>2</Access>
+		<Name>App</Name>
+		<Access>2</Access>
+		<Name>HomeAuto</Name>
+		<Access>2</Access>
+		<Name>BoxAdmin</Name>
+		<Access>2</Access>
+		<Name>Phone</Name>
+		<Access>2</Access>
+		<Name>NAS</Name>
+		<Access>2</Access>
+	</Rights>
+	<Users>
+		<User last="1">main_user</User>
+		<User>otheruser</User>
+		<User>remote_user</User>
+	</Users>
+</SessionInfo>
