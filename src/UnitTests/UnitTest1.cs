@@ -16,6 +16,21 @@ namespace UnitTests
 	[TestClass]
 	public class UnitTest1
 	{
+
+		[TestMethod]
+		public void TestAlternativeLogUrl()
+		{
+			FboxClient fritzLogin = CreateFboxClient();
+			string sid = fritzLogin.CreateNewSession();
+			//Uri url = new Uri($"data.lua?page=log&sid={sid}",UriKind.Relative); // json - not the log, but overview-data, connection status, phone calls and much more
+			//Uri url = new Uri($"data.lua?page=netCnt&sid={sid}", UriKind.Relative);// seems to return the same
+			//Uri url = new Uri($"data.lua?sid={sid}&lang=de&page=netCnt&no_sidrenew=", UriKind.Relative);// seems to return the same
+			//Uri url = new Uri($"data.lua?sid={sid}&page='ecoStat'", UriKind.Relative);// seems to return the same
+			Uri url = FboxUrlBuilder.GetLogEntriesRelativeUrl(sid);// works
+			string resp = fritzLogin.DownloadString(url);
+
+		}
+
 		[TestMethod]
 		public void TestWebClient()
 		{
@@ -57,12 +72,8 @@ namespace UnitTests
 		[TestMethod]
 		public void TestAvmLoginCode()
 		{
-			NetworkCredential cred = GetCredentials();
-			var settings = new FboxConnectionSettings(cred.UserName, cred.Password);
-			FboxClient fritzLogin = new FboxClient(settings);
-			string sid= fritzLogin.CreateNewSession();
-
-
+			FboxClient fritzLogin = CreateFboxClient();
+			string sid = fritzLogin.CreateNewSession();
 			FboxSessionInfo resp = fritzLogin.TerminateSession(sid);
 		}
 
@@ -151,7 +162,13 @@ namespace UnitTests
 			var all = CredentialManager.EnumerateCredentials();
 		}
 
-
+		private static FboxClient CreateFboxClient()
+		{
+			NetworkCredential cred = GetCredentials();
+			var settings = new FboxConnectionSettings(cred.UserName, cred.Password);
+			FboxClient fritzLogin = new FboxClient(settings);
+			return fritzLogin;
+		}
 		private static NetworkCredential GetCredentials()
 		{
 			return CredentialManager.GetCredentials("FbPacketCapture_User_FritzBox");
