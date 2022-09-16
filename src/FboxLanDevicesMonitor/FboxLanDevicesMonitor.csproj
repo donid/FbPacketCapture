@@ -54,6 +54,16 @@
   <PropertyGroup>
     <ApplicationIcon>ReLayoutParts_32x32.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_NoDevExPrjs|AnyCPU'">
+    <OutputPath>bin\Release_NoDevExPrjs\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>9.0</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.Data.Desktop.v22.1, Version=22.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Drawing.v22.1, Version=22.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
@@ -135,12 +145,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="V:\projects_os_git\FbPacketCapture\src\FboxSharp\FboxSharp.csproj">
-      <Project>{ADCA6E86-44DA-48B3-BE3C-AF136C5A48EA}</Project>
-      <Name>FboxSharp</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="ReLayoutParts_32x32.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +158,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FboxSharp\FboxSharp.csproj">
+      <Project>{748A3C3C-F0B8-42D1-932D-AFA98D14706B}</Project>
+      <Name>FboxSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

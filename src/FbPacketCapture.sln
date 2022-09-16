@@ -16,23 +16,31 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Release_NoDevExPrjs|Any CPU = Release_NoDevExPrjs|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FAA054A2-38C4-45D2-A41B-74FAB800CD0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FAA054A2-38C4-45D2-A41B-74FAB800CD0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAA054A2-38C4-45D2-A41B-74FAB800CD0C}.Release_NoDevExPrjs|Any CPU.ActiveCfg = Release_NoDevExPrjs|Any CPU
+		{FAA054A2-38C4-45D2-A41B-74FAB800CD0C}.Release_NoDevExPrjs|Any CPU.Build.0 = Release_NoDevExPrjs|Any CPU
 		{FAA054A2-38C4-45D2-A41B-74FAB800CD0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAA054A2-38C4-45D2-A41B-74FAB800CD0C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B0E37293-CD11-4401-98FD-7D3026321153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B0E37293-CD11-4401-98FD-7D3026321153}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0E37293-CD11-4401-98FD-7D3026321153}.Release_NoDevExPrjs|Any CPU.ActiveCfg = Release_NoDevExPrjs|Any CPU
+		{B0E37293-CD11-4401-98FD-7D3026321153}.Release_NoDevExPrjs|Any CPU.Build.0 = Release_NoDevExPrjs|Any CPU
 		{B0E37293-CD11-4401-98FD-7D3026321153}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0E37293-CD11-4401-98FD-7D3026321153}.Release|Any CPU.Build.0 = Release|Any CPU
 		{748A3C3C-F0B8-42D1-932D-AFA98D14706B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{748A3C3C-F0B8-42D1-932D-AFA98D14706B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{748A3C3C-F0B8-42D1-932D-AFA98D14706B}.Release_NoDevExPrjs|Any CPU.ActiveCfg = Release_NoDevExPrjs|Any CPU
+		{748A3C3C-F0B8-42D1-932D-AFA98D14706B}.Release_NoDevExPrjs|Any CPU.Build.0 = Release_NoDevExPrjs|Any CPU
 		{748A3C3C-F0B8-42D1-932D-AFA98D14706B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{748A3C3C-F0B8-42D1-932D-AFA98D14706B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0D54C92D-1FE6-4600-BB0C-8441D5A95E10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0D54C92D-1FE6-4600-BB0C-8441D5A95E10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D54C92D-1FE6-4600-BB0C-8441D5A95E10}.Release_NoDevExPrjs|Any CPU.ActiveCfg = Release_NoDevExPrjs|Any CPU
 		{0D54C92D-1FE6-4600-BB0C-8441D5A95E10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D54C92D-1FE6-4600-BB0C-8441D5A95E10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
