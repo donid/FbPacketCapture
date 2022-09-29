@@ -7,15 +7,24 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using AdysTech.CredentialManager;
+
+using DevExpress.Utils.Menu;
 using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Views.Grid;
+
 using DnblCore;
-using FboxSharp;
+
 using FboxLanDevicesMonitor.Properties;
+
+using FboxSharp;
+
 using PS.FritzBox.API;
 using PS.FritzBox.API.LANDevice;
 //using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -34,7 +43,7 @@ namespace FboxLanDevicesMonitor
 			get => _credManTarget;
 		}
 
-		static MainForm? s_mainFormInstance;
+		private static MainForm? s_mainFormInstance;
 		public static MainForm Instance
 		{
 			get
@@ -47,12 +56,12 @@ namespace FboxLanDevicesMonitor
 			}
 		}
 
-		FboxConnectionSettings? _connectionSettings;
-		FboxClient? _fboxClient = null;
-		List<HostEntryVM>? _currentDevicesList;
-		DateTime? _latestLogEntryTimestamp = null;
-		IReadOnlyList<FboxLogEntry>? _logLines;
-		DiffResults<HostEntryVM, string[]>? _devicesDiffResult;
+		private FboxConnectionSettings? _connectionSettings;
+		private FboxClient? _fboxClient = null;
+		private List<HostEntryVM>? _currentDevicesList;
+		private DateTime? _latestLogEntryTimestamp = null;
+		private IReadOnlyList<FboxLogEntry>? _logLines;
+		private DiffResults<HostEntryVM, string[]>? _devicesDiffResult;
 
 
 		public MainForm()
@@ -65,6 +74,8 @@ namespace FboxLanDevicesMonitor
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
+
+			base.Text += " " + Application.ProductVersion;
 		}
 
 		private async void Form1_Load(object sender, EventArgs e)
@@ -141,7 +152,7 @@ namespace FboxLanDevicesMonitor
 				List<HostEntry> newList = await Helpers.GetAllHosts(psSettings);
 				List<HostEntryVM> newDevicesList = newList.Select(i => new HostEntryVM(i)).ToList();
 				List<HostEntryVM> currentDevicesList = _currentDevicesList ?? new List<HostEntryVM>();
-				DiffResults<HostEntryVM, string[]> diffResult = 
+				DiffResults<HostEntryVM, string[]> diffResult =
 					ListDiffer.ListsDiff(currentDevicesList, newDevicesList, (HostEntryVM he) => he.MACAddress, HostEntryVM.ListDiffComparer);
 				labelControl1.Text = $"{DateTime.Now.ToLongTimeString()} - {diffResult.Added.Count()} added - {diffResult.Removed.Count()} removed - {diffResult.Changed.Count()} changed";
 				labelControl1.ToolTip = Helpers.GetTooltipText(diffResult);
@@ -165,7 +176,7 @@ namespace FboxLanDevicesMonitor
 		}
 
 		// return value: success
-		async Task<bool> RefreshLogAsync()
+		private async Task<bool> RefreshLogAsync()
 		{
 			if (_fboxClient == null)
 			{
@@ -342,5 +353,106 @@ namespace FboxLanDevicesMonitor
 			}
 		}
 
+		private void gridViewDevices_PopupMenuShowing(object sender, DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs e)
+		{
+			if (e.HitInfo.InRow)
+			{
+				AddDevicesRowMenuItem(e, "Copy Name as HTTP-Url", CopyNameUrlHandler);
+				AddDevicesRowMenuItem(e, "Copy IP as HTTP-Url", CopyIpUrlHandler);
+				AddDevicesRowMenuItem(e, "Mac Vendor Lookup", MacLookupHandler);
+				AddDevicesRowMenuItem(e, "Start diagnosis shell", DiagnosisShellHandler);
+			}
+		}
+		private void DiagnosisShellHandler(object sender, EventArgs e)
+		{
+			DXMenuItem? menuItem = sender as DXMenuItem;
+			if (menuItem == null)
+			{
+				return;
+			}
+
+			HostEntryVM row = (HostEntryVM)menuItem.Tag;
+			string command = $"-noexit -command \"& {{ Resolve-DnsName {row.HostName} -LlmnrFallback -NetbiosFallback ; ping {row.IPAddress} }}\" ";
+			try
+			{
+				Process.Start("powershell.exe", command);
+			}
+			catch (Exception ex)
+			{
+				ShowMessageBox("Cannot start powershell: " + ex.Message);
+			}
+		}
+
+		private void CopyNameUrlHandler(object sender, EventArgs e)
+		{
+			CopyUrlHandler(sender, e, true);
+		}
+		private void CopyIpUrlHandler(object sender, EventArgs e)
+		{
+			CopyUrlHandler(sender, e, false);
+		}
+
+		private void CopyUrlHandler(object sender, EventArgs e, bool useHostName)
+		{
+			DXMenuItem? menuItem = sender as DXMenuItem;
+			if (menuItem == null)
+			{
+				return;
+			}
+
+			HostEntryVM row = (HostEntryVM)menuItem.Tag;
+			string nameOrIp = useHostName ? row.HostName : row.IPAddress.ToString();
+			string text = "http://" + nameOrIp;
+			Clipboard.SetText(text);
+		}
+
+		private void AddDevicesRowMenuItem(PopupMenuShowingEventArgs e, string caption, EventHandler handler)
+		{
+			DXMenuItem menuItem = new DXMenuItem(caption, handler);
+			HostEntryVM row = (HostEntryVM)gridViewDevices.GetRow(e.HitInfo.RowHandle);
+			menuItem.Tag = row;
+			e.Menu.Items.Add(menuItem);
+		}
+
+		private void MacLookupHandler(object sender, EventArgs e)
+		{
+			WebClient client = new WebClient();
+			DXMenuItem? menuItem = sender as DXMenuItem;
+			if (menuItem == null)
+			{
+				return;
+			}
+
+			HostEntryVM row = (HostEntryVM)menuItem.Tag;
+			string macAddress = row.MACAddress.Replace(":", "");
+			if (string.IsNullOrWhiteSpace(macAddress))
+			{
+				ShowMessageBox("Invalid MAC-Address");
+				return;
+			}
+
+			string uri = "https://api.macvendors.com/" + macAddress;
+			string result;
+			try
+			{
+				result = client.DownloadString(uri);
+			}
+			catch (WebException ex)
+			{
+				if (ex.Response is HttpWebResponse resp && resp.StatusCode == HttpStatusCode.NotFound)
+				{
+					result = "No entry found in the vendor database!";
+				}
+				else
+				{
+					result = ex.Message;
+				}
+			}
+			catch (Exception ex)
+			{
+				result = ex.Message;
+			}
+			ShowMessageBox(result);
+		}
 	}
 }

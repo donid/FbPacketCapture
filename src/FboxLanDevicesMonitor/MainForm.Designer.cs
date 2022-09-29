@@ -112,6 +112,7 @@ namespace FboxLanDevicesMonitor
 			this.gridViewDevices.OptionsView.ShowAutoFilterRow = true;
 			this.gridViewDevices.OptionsView.ShowGroupPanel = false;
 			this.gridViewDevices.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gridViewDevices_RowCellStyle);
+			this.gridViewDevices.PopupMenuShowing += new DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventHandler(this.gridViewDevices_PopupMenuShowing);
 			this.gridViewDevices.CustomColumnSort += new DevExpress.XtraGrid.Views.Base.CustomColumnSortEventHandler(this.gridViewDevices_CustomColumnSort);
 			// 
 			// colActive

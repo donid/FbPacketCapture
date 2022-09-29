@@ -51,6 +51,8 @@ Alternativ startet der Befehl 'control keymgr.dll' den Windows Credential Manage
 
 Der FboxLanDevicesMonitor fragt den DNS-Server der FritzBox ab, welche Hosts/Devices im Netzwerk bekannt sind (auch momentan inaktive Hosts). Dann werden DNS-Name, IPv4-Adresse, MAC-Adresse und mehr in einer Tabelle angezeigt. Nach einem Klick auf 'Refresh' wird die Liste erneut abgefragt und die Geräte die neu hinzugekommen sind, oder ihren Status verändert haben, werden farblich markiert. Damit kann man diese Liste überwachen (monitoren) und z.B. den Namen eines neu eingeschalteten IoT-Geräts herausfinden, ohne dessen Bedienungsanleitung lesen zu müssen.
 
+Neu in V1.1: Kontext-Menü im Devices-Grid.
+
 Ein zweites Feature des FboxLanDevicesMonitor ist die Anzeige der FritzBox Ereignis-Liste (EventLog). Die FritzBox hat dafür zwar eine 'schöne' SOAP-Api, diese liefert jedoch nicht alle Events und ist damit nur sehr eingeschränkt nützlich. Der FboxLanDevicesMonitor nutzt deshalb einen alternativen Mechanismus (eine .lua Seite).
 
 Ausserdem kann diese Software als Beispiel verwendet werden wie die Library 'FboxSharp' zu verwenden ist, mit der die Funktionalität realisiert wurde.
