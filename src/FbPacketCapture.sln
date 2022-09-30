@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FboxSharp", "FboxSharp\Fbox
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FboxLanDevicesMonitor", "FboxLanDevicesMonitor\FboxLanDevicesMonitor.csproj", "{0D54C92D-1FE6-4600-BB0C-8441D5A95E10}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FboxEventLogCollector", "FboxEventLogCollector\FboxEventLogCollector.csproj", "{D19820B8-623D-40B9-87D0-9AE5259B147E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,12 @@ Global
 		{0D54C92D-1FE6-4600-BB0C-8441D5A95E10}.Release_NoDevExPrjs|Any CPU.ActiveCfg = Release_NoDevExPrjs|Any CPU
 		{0D54C92D-1FE6-4600-BB0C-8441D5A95E10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D54C92D-1FE6-4600-BB0C-8441D5A95E10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D19820B8-623D-40B9-87D0-9AE5259B147E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D19820B8-623D-40B9-87D0-9AE5259B147E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D19820B8-623D-40B9-87D0-9AE5259B147E}.Release_NoDevExPrjs|Any CPU.ActiveCfg = Release|Any CPU
+		{D19820B8-623D-40B9-87D0-9AE5259B147E}.Release_NoDevExPrjs|Any CPU.Build.0 = Release|Any CPU
+		{D19820B8-623D-40B9-87D0-9AE5259B147E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D19820B8-623D-40B9-87D0-9AE5259B147E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -56,3 +56,7 @@ Neu in V1.1: Kontext-Menü im Devices-Grid.
 Ein zweites Feature des FboxLanDevicesMonitor ist die Anzeige der FritzBox Ereignis-Liste (EventLog). Die FritzBox hat dafür zwar eine 'schöne' SOAP-Api, diese liefert jedoch nicht alle Events und ist damit nur sehr eingeschränkt nützlich. Der FboxLanDevicesMonitor nutzt deshalb einen alternativen Mechanismus (eine .lua Seite).
 
 Ausserdem kann diese Software als Beispiel verwendet werden wie die Library 'FboxSharp' zu verwenden ist, mit der die Funktionalität realisiert wurde.
+
+**Neue Applikation: FboxEventLogCollector**
+
+Liest das Event-Log der FritzBox aus und hängt neu hinzugekommene Einträge an eine CSV Log-Datei an. Wenn dieses Programm in periodischen Abständen (z.B. alle paar Stunden) gestartet wird, entsteht eine vollständige Ereignishistorie.
