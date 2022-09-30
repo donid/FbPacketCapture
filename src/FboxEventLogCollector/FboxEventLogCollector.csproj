@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="V:\projects_os_git\FbPacketCapture\src\FboxSharp\FboxSharp.csproj" />
+    <ProjectReference Include="..\FboxSharp\FboxSharp.csproj" />
   </ItemGroup>
 
   <ItemGroup>

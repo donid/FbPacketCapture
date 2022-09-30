@@ -23,4 +23,6 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: FbPacketCapture_release_${{ github.sha }}
-        path: src\FbPacketCapture\bin\Release_NoDevExPrjs\net6.0
+        path: |
+          src\FbPacketCapture\bin\Release_NoDevExPrjs\net6.0
+          src\FboxEventLogCollector\bin\Release\net6.0
