@@ -3,12 +3,16 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+
 using AdysTech.CredentialManager;
+
 using CsvHelper;
 using CsvHelper.Configuration;
+
 using FboxSharp;
 
 namespace UnitTests
@@ -18,15 +22,45 @@ namespace UnitTests
 	{
 
 		[TestMethod]
+		public async Task TestPostRequests()
+		{
+			FboxClient fritzLogin = CreateFboxClient();
+			string sid = fritzLogin.CreateNewSession();
+
+			//Allowing Untrusted SSL Certificates
+			var handler = new HttpClientHandler()
+			{
+				ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+			};
+			HttpClient client = new HttpClient(handler);
+			var content = new FormUrlEncodedContent(new[]
+			{
+				new KeyValuePair<string, string>("sid", sid),
+
+				//new KeyValuePair<string, string>("page", "ecoStat"), // works -> json - cpu load
+
+				//new KeyValuePair<string, string>("page", "log"), // works -> json - eventlog
+
+				//new KeyValuePair<string, string>("page", "netCnt") // works -> html - 'Datenvolumen' values always empty!?
+				//new KeyValuePair<string, string>("lang", "de") // makes no difference?!
+
+				//new KeyValuePair<string, string>("page", "bookLi" )// works -> html - list of telephonebooks
+
+				//new KeyValuePair<string, string>("page", "callLock" )// works -> html - Rufsperren
+				
+			});
+			HttpResponseMessage result = await client.PostAsync("https://fritz.box/data.lua", content);
+			string resultContent = await result.Content.ReadAsStringAsync();
+		}
+
+		[TestMethod]
 		public void TestAlternativeLogUrl()
 		{
 			FboxClient fritzLogin = CreateFboxClient();
 			string sid = fritzLogin.CreateNewSession();
-			//Uri url = new Uri($"data.lua?page=log&sid={sid}",UriKind.Relative); // json - not the log, but overview-data, connection status, phone calls and much more
-			//Uri url = new Uri($"data.lua?page=netCnt&sid={sid}", UriKind.Relative);// seems to return the same
-			//Uri url = new Uri($"data.lua?sid={sid}&lang=de&page=netCnt&no_sidrenew=", UriKind.Relative);// seems to return the same
-			//Uri url = new Uri($"data.lua?sid={sid}&page='ecoStat'", UriKind.Relative);// seems to return the same
 			Uri url = FboxUrlBuilder.GetLogEntriesRelativeUrl(sid);// works
+
+			//Uri url = new Uri($"data.lua",UriKind.Relative); // json - overview-data, connection status, phone calls and much more
 			string resp = fritzLogin.DownloadString(url);
 
 		}
@@ -34,7 +68,7 @@ namespace UnitTests
 		[TestMethod]
 		public void TestWebClient()
 		{
-			FboxConnectionSettings loginData = new FboxConnectionSettings("","");
+			FboxConnectionSettings loginData = new FboxConnectionSettings("", "");
 			FboxUrlBuilder urlBuilder = new FboxUrlBuilder(loginData);
 
 #pragma warning disable SYSLIB0014 // Type or member is obsolete
@@ -43,9 +77,9 @@ namespace UnitTests
 
 			wc.BaseAddress = urlBuilder.GetBaseUrl().ToString();
 			string result = wc.DownloadString(loginData.Path);
-			string result2 = wc.DownloadString(new Uri(loginData.Path,UriKind.Relative));
+			string result2 = wc.DownloadString(new Uri(loginData.Path, UriKind.Relative));
 			// despite of the misleading exception, this ctor always assumes UriKind.Absolute !!!
-			string result3 = wc.DownloadString(new Uri("/"+loginData.Path));
+			string result3 = wc.DownloadString(new Uri("/" + loginData.Path));
 
 		}
 
