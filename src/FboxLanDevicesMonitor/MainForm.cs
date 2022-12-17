@@ -136,6 +136,28 @@ namespace FboxLanDevicesMonitor
 
 		}
 
+		// not sure why, but a duplicate MAC-Address occurred once after attaching a new device to the network
+		private static List<HostEntryVM> FilterUniqueMacAddresses(List<HostEntryVM> devices, out string messages)
+		{
+			List<HostEntryVM> result = new List<HostEntryVM>();
+			StringBuilder stringBuilder = new StringBuilder();
+			var dict = new Dictionary<string, HostEntryVM>();
+			foreach (HostEntryVM hostEntry in devices)
+			{
+				if (dict.TryGetValue(hostEntry.MACAddress, out var found))
+				{
+					string msg = $"Ignoring {hostEntry.MACAddress} {hostEntry.HostName} {hostEntry.IPAddress} because {hostEntry.MACAddress} {hostEntry.HostName} {hostEntry.IPAddress} has the same MAC-Address";
+					stringBuilder.AppendLine(msg);
+				}
+				else
+				{
+					dict.Add(hostEntry.MACAddress, hostEntry);
+				}
+			}
+			messages = stringBuilder.ToString();
+			return result;
+		}
+
 		private async void simpleButtonRefreshDevices_Click(object sender, EventArgs e)
 		{
 			if (_connectionSettings == null)
@@ -152,10 +174,16 @@ namespace FboxLanDevicesMonitor
 				List<HostEntry> newList = await Helpers.GetAllHosts(psSettings);
 				List<HostEntryVM> newDevicesList = newList.Select(i => new HostEntryVM(i)).ToList();
 				List<HostEntryVM> currentDevicesList = _currentDevicesList ?? new List<HostEntryVM>();
+				List<HostEntryVM> filteredCurrentDevices = FilterUniqueMacAddresses(currentDevicesList, out string messages);
 				DiffResults<HostEntryVM, string[]> diffResult =
 					ListDiffer.ListsDiff(currentDevicesList, newDevicesList, (HostEntryVM he) => he.MACAddress, HostEntryVM.ListDiffComparer);
 				labelControl1.Text = $"{DateTime.Now.ToLongTimeString()} - {diffResult.Added.Count()} added - {diffResult.Removed.Count()} removed - {diffResult.Changed.Count()} changed";
 				labelControl1.ToolTip = Helpers.GetTooltipText(diffResult);
+
+				if (messages != "")
+				{
+					ShowMessageBox(messages);
+				}
 
 				_devicesDiffResult = diffResult;
 				_currentDevicesList = newDevicesList;
