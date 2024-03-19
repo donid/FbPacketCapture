@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -318,7 +317,7 @@ namespace FboxLanDevicesMonitor
 
 		}
 
-		private void gridViewLog_RowStyle(object sender, DevExpress.XtraGrid.Views.Grid.RowStyleEventArgs e)
+		private void gridViewLog_RowStyle(object sender, RowStyleEventArgs e)
 		{
 			if (_latestLogEntryTimestamp == null)
 			{
@@ -353,7 +352,7 @@ namespace FboxLanDevicesMonitor
 			}
 		}
 
-		private void gridViewDevices_RowCellStyle(object sender, DevExpress.XtraGrid.Views.Grid.RowCellStyleEventArgs e)
+		private void gridViewDevices_RowCellStyle(object sender, RowCellStyleEventArgs e)
 		{
 			if (_devicesDiffResult == null)
 			{
@@ -381,9 +380,9 @@ namespace FboxLanDevicesMonitor
 			}
 		}
 
-		private void gridViewDevices_PopupMenuShowing(object sender, DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs e)
+		private void gridViewDevices_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
 		{
-			if (e.HitInfo.InRow)
+			if (e.HitInfo.InDataRow)
 			{
 				AddDevicesRowMenuItem(e, "Copy Name as HTTP-Url", CopyNameUrlHandler);
 				AddDevicesRowMenuItem(e, "Copy IP as HTTP-Url", CopyIpUrlHandler);
@@ -391,6 +390,7 @@ namespace FboxLanDevicesMonitor
 				AddDevicesRowMenuItem(e, "Start diagnosis shell", DiagnosisShellHandler);
 			}
 		}
+
 		private void DiagnosisShellHandler(object sender, EventArgs e)
 		{
 			DXMenuItem? menuItem = sender as DXMenuItem;
