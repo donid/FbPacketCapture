@@ -5,6 +5,7 @@ using System.Net;
 using AdysTech.CredentialManager;
 
 using CommandLine;
+
 using FboxSharp;
 
 namespace FbPacketCapture
@@ -61,7 +62,7 @@ namespace FbPacketCapture
 			Console.WriteLine("Press any key to exit after capture has stopped");
 			Console.WriteLine("Getting session-id...");
 
-			FboxConnectionSettings loginData = new FboxConnectionSettings( savedCredential.UserName, savedCredential.Password );
+			FboxConnectionSettings loginData = new FboxConnectionSettings(savedCredential.UserName, savedCredential.Password);
 			FboxClient fbClient = new FboxClient(loginData);
 
 			string sessionId;
@@ -81,14 +82,22 @@ namespace FbPacketCapture
 			}
 
 			CancellationTokenSource cts = new CancellationTokenSource();
-			string interfaceName = "3-0";// "Routing-Schnittstelle" - see interface_names.txt
+			// see interface_names.txt
+			//string interfaceName = "3-0";// "Routing-Interface" -> voip-captures were incomplete!!! had a lot of gaps
+			string interfaceName = "2-1";// "InternetConnection-Interface"
 			Stream input = fbClient.GetPcapStreamAsync(sessionId, interfaceName, cts).GetAwaiter().GetResult();
 
+			/*
 			const string pipeName = "FritzCapturePipe";
 			var output = new NamedPipeServerStream(pipeName); // Wireshark needs a named pipe
 			Console.WriteLine("Starting Wireshark...");
 			Process.Start(wiresharkExePath, @"-k -i\\.\pipe\" + pipeName);
 			output.WaitForConnection();
+			const int bufferSize = 81920;
+			input.CopyToAsync(output, bufferSize, cts.Token);
+			*/
+			Console.WriteLine("Saving pcap-file - press any key to stop");
+			FileStream output = File.Create(@"e:\delme.pcap");
 			const int bufferSize = 81920;
 			input.CopyToAsync(output, bufferSize, cts.Token);
 
