@@ -40,9 +40,16 @@ namespace FboxLanDevicesMonitor
 			this.colAddressSource = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colLeaseTimeRemaining = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colMACAddress = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
+			this.bar3 = new DevExpress.XtraBars.Bar();
+			this.barStaticItemLoggingTo = new DevExpress.XtraBars.BarStaticItem();
+			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
+			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
+			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
+			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+			this.toolTipController1 = new DevExpress.Utils.ToolTipController(this.components);
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
 			this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
-			this.toolTipController1 = new DevExpress.Utils.ToolTipController(this.components);
 			this.checkEditAutoRefresh = new DevExpress.XtraEditors.CheckEdit();
 			this.simpleButtonManageSavedCredentials = new DevExpress.XtraEditors.SimpleButton();
 			this.simpleButtonFromFile = new DevExpress.XtraEditors.SimpleButton();
@@ -66,8 +73,10 @@ namespace FboxLanDevicesMonitor
 			this.splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
 			this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
+			this.barStaticItemVersion = new DevExpress.XtraBars.BarStaticItem();
 			((System.ComponentModel.ISupportInitialize)(this.gridControlDevices)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridViewDevices)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.checkEditAutoRefresh.Properties)).BeginInit();
@@ -91,8 +100,9 @@ namespace FboxLanDevicesMonitor
 			this.gridControlDevices.DataSource = typeof(FboxLanDevicesMonitor.HostEntryVM);
 			this.gridControlDevices.Location = new System.Drawing.Point(12, 38);
 			this.gridControlDevices.MainView = this.gridViewDevices;
+			this.gridControlDevices.MenuManager = this.barManager1;
 			this.gridControlDevices.Name = "gridControlDevices";
-			this.gridControlDevices.Size = new System.Drawing.Size(798, 360);
+			this.gridControlDevices.Size = new System.Drawing.Size(798, 344);
 			this.gridControlDevices.TabIndex = 0;
 			this.gridControlDevices.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewDevices});
@@ -166,6 +176,79 @@ namespace FboxLanDevicesMonitor
 			this.colMACAddress.Visible = true;
 			this.colMACAddress.VisibleIndex = 3;
 			// 
+			// barManager1
+			// 
+			this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
+            this.bar3});
+			this.barManager1.DockControls.Add(this.barDockControlTop);
+			this.barManager1.DockControls.Add(this.barDockControlBottom);
+			this.barManager1.DockControls.Add(this.barDockControlLeft);
+			this.barManager1.DockControls.Add(this.barDockControlRight);
+			this.barManager1.Form = this;
+			this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.barStaticItemLoggingTo,
+            this.barStaticItemVersion});
+			this.barManager1.MaxItemId = 2;
+			this.barManager1.StatusBar = this.bar3;
+			// 
+			// bar3
+			// 
+			this.bar3.BarName = "Status bar";
+			this.bar3.CanDockStyle = DevExpress.XtraBars.BarCanDockStyle.Bottom;
+			this.bar3.DockCol = 0;
+			this.bar3.DockRow = 0;
+			this.bar3.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
+			this.bar3.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItemLoggingTo),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItemVersion)});
+			this.bar3.OptionsBar.AllowQuickCustomization = false;
+			this.bar3.OptionsBar.DrawDragBorder = false;
+			this.bar3.OptionsBar.UseWholeRow = true;
+			this.bar3.Text = "Status bar";
+			// 
+			// barStaticItemLoggingTo
+			// 
+			this.barStaticItemLoggingTo.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+			this.barStaticItemLoggingTo.Caption = "Logging To:";
+			this.barStaticItemLoggingTo.Id = 0;
+			this.barStaticItemLoggingTo.Name = "barStaticItemLoggingTo";
+			// 
+			// barDockControlTop
+			// 
+			this.barDockControlTop.CausesValidation = false;
+			this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
+			this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
+			this.barDockControlTop.Manager = this.barManager1;
+			this.barDockControlTop.Size = new System.Drawing.Size(822, 0);
+			// 
+			// barDockControlBottom
+			// 
+			this.barDockControlBottom.CausesValidation = false;
+			this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.barDockControlBottom.Location = new System.Drawing.Point(0, 652);
+			this.barDockControlBottom.Manager = this.barManager1;
+			this.barDockControlBottom.Size = new System.Drawing.Size(822, 27);
+			// 
+			// barDockControlLeft
+			// 
+			this.barDockControlLeft.CausesValidation = false;
+			this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
+			this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
+			this.barDockControlLeft.Manager = this.barManager1;
+			this.barDockControlLeft.Size = new System.Drawing.Size(0, 652);
+			// 
+			// barDockControlRight
+			// 
+			this.barDockControlRight.CausesValidation = false;
+			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
+			this.barDockControlRight.Location = new System.Drawing.Point(822, 0);
+			this.barDockControlRight.Manager = this.barManager1;
+			this.barDockControlRight.Size = new System.Drawing.Size(0, 652);
+			// 
+			// toolTipController1
+			// 
+			this.toolTipController1.AllowHtmlText = true;
+			// 
 			// layoutControl1
 			// 
 			this.layoutControl1.Controls.Add(this.labelControl1);
@@ -181,7 +264,7 @@ namespace FboxLanDevicesMonitor
 			this.layoutControl1.Name = "layoutControl1";
 			this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(950, 408, 650, 400);
 			this.layoutControl1.Root = this.Root;
-			this.layoutControl1.Size = new System.Drawing.Size(822, 679);
+			this.layoutControl1.Size = new System.Drawing.Size(822, 652);
 			this.layoutControl1.TabIndex = 1;
 			this.layoutControl1.Text = "layoutControl1";
 			// 
@@ -195,13 +278,9 @@ namespace FboxLanDevicesMonitor
 			this.labelControl1.Text = "Click \'Refresh\' to see a summary of the changes here (and in the tooltip)";
 			this.labelControl1.ToolTipController = this.toolTipController1;
 			// 
-			// toolTipController1
-			// 
-			this.toolTipController1.AllowHtmlText = true;
-			// 
 			// checkEditAutoRefresh
 			// 
-			this.checkEditAutoRefresh.Location = new System.Drawing.Point(424, 428);
+			this.checkEditAutoRefresh.Location = new System.Drawing.Point(424, 412);
 			this.checkEditAutoRefresh.Name = "checkEditAutoRefresh";
 			this.checkEditAutoRefresh.Properties.Caption = "AutoRefresh";
 			this.checkEditAutoRefresh.Size = new System.Drawing.Size(196, 19);
@@ -213,7 +292,7 @@ namespace FboxLanDevicesMonitor
 			// 
 			this.simpleButtonManageSavedCredentials.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("simpleButtonManageSavedCredentials.ImageOptions.SvgImage")));
 			this.simpleButtonManageSavedCredentials.ImageOptions.SvgImageSize = new System.Drawing.Size(16, 16);
-			this.simpleButtonManageSavedCredentials.Location = new System.Drawing.Point(624, 428);
+			this.simpleButtonManageSavedCredentials.Location = new System.Drawing.Point(624, 412);
 			this.simpleButtonManageSavedCredentials.Name = "simpleButtonManageSavedCredentials";
 			this.simpleButtonManageSavedCredentials.Size = new System.Drawing.Size(183, 22);
 			this.simpleButtonManageSavedCredentials.StyleController = this.layoutControl1;
@@ -223,7 +302,7 @@ namespace FboxLanDevicesMonitor
 			// 
 			// simpleButtonFromFile
 			// 
-			this.simpleButtonFromFile.Location = new System.Drawing.Point(15, 428);
+			this.simpleButtonFromFile.Location = new System.Drawing.Point(15, 412);
 			this.simpleButtonFromFile.Name = "simpleButtonFromFile";
 			this.simpleButtonFromFile.Size = new System.Drawing.Size(194, 22);
 			this.simpleButtonFromFile.StyleController = this.layoutControl1;
@@ -233,7 +312,7 @@ namespace FboxLanDevicesMonitor
 			// 
 			// simpleButtonRefreshLog
 			// 
-			this.simpleButtonRefreshLog.Location = new System.Drawing.Point(213, 428);
+			this.simpleButtonRefreshLog.Location = new System.Drawing.Point(213, 412);
 			this.simpleButtonRefreshLog.Name = "simpleButtonRefreshLog";
 			this.simpleButtonRefreshLog.Size = new System.Drawing.Size(207, 22);
 			this.simpleButtonRefreshLog.StyleController = this.layoutControl1;
@@ -244,10 +323,10 @@ namespace FboxLanDevicesMonitor
 			// gridControlLog
 			// 
 			this.gridControlLog.DataSource = typeof(FboxSharp.FboxLogEntry);
-			this.gridControlLog.Location = new System.Drawing.Point(15, 454);
+			this.gridControlLog.Location = new System.Drawing.Point(15, 438);
 			this.gridControlLog.MainView = this.gridViewLog;
 			this.gridControlLog.Name = "gridControlLog";
-			this.gridControlLog.Size = new System.Drawing.Size(792, 210);
+			this.gridControlLog.Size = new System.Drawing.Size(792, 199);
 			this.gridControlLog.TabIndex = 6;
 			this.gridControlLog.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewLog});
@@ -324,7 +403,7 @@ namespace FboxLanDevicesMonitor
             this.splitterItem1,
             this.layoutControlItem5});
 			this.Root.Name = "Root";
-			this.Root.Size = new System.Drawing.Size(822, 679);
+			this.Root.Size = new System.Drawing.Size(822, 652);
 			this.Root.TextVisible = false;
 			// 
 			// layoutControlItemGridDevices
@@ -333,7 +412,7 @@ namespace FboxLanDevicesMonitor
 			this.layoutControlItemGridDevices.Location = new System.Drawing.Point(0, 26);
 			this.layoutControlItemGridDevices.MinSize = new System.Drawing.Size(104, 24);
 			this.layoutControlItemGridDevices.Name = "layoutControlItemGridDevices";
-			this.layoutControlItemGridDevices.Size = new System.Drawing.Size(802, 364);
+			this.layoutControlItemGridDevices.Size = new System.Drawing.Size(802, 348);
 			this.layoutControlItemGridDevices.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.layoutControlItemGridDevices.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItemGridDevices.TextVisible = false;
@@ -355,10 +434,10 @@ namespace FboxLanDevicesMonitor
             this.layoutControlItem4,
             this.layoutControlItem1,
             this.layoutControlItem3});
-			this.layoutControlGroup1.Location = new System.Drawing.Point(0, 395);
+			this.layoutControlGroup1.Location = new System.Drawing.Point(0, 379);
 			this.layoutControlGroup1.Name = "layoutControlGroup1";
 			this.layoutControlGroup1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-			this.layoutControlGroup1.Size = new System.Drawing.Size(802, 264);
+			this.layoutControlGroup1.Size = new System.Drawing.Size(802, 253);
 			this.layoutControlGroup1.Text = "Log Entries";
 			this.layoutControlGroup1.TextLocation = DevExpress.Utils.Locations.Default;
 			// 
@@ -377,7 +456,7 @@ namespace FboxLanDevicesMonitor
 			this.layoutControlItemGridLog.Location = new System.Drawing.Point(0, 26);
 			this.layoutControlItemGridLog.MinSize = new System.Drawing.Size(104, 24);
 			this.layoutControlItemGridLog.Name = "layoutControlItemGridLog";
-			this.layoutControlItemGridLog.Size = new System.Drawing.Size(796, 214);
+			this.layoutControlItemGridLog.Size = new System.Drawing.Size(796, 203);
 			this.layoutControlItemGridLog.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.layoutControlItemGridLog.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItemGridLog.TextVisible = false;
@@ -411,8 +490,7 @@ namespace FboxLanDevicesMonitor
 			// 
 			// splitterItem1
 			// 
-			this.splitterItem1.AllowHotTrack = true;
-			this.splitterItem1.Location = new System.Drawing.Point(0, 390);
+			this.splitterItem1.Location = new System.Drawing.Point(0, 374);
 			this.splitterItem1.Name = "splitterItem1";
 			this.splitterItem1.Size = new System.Drawing.Size(802, 5);
 			// 
@@ -432,18 +510,29 @@ namespace FboxLanDevicesMonitor
 			this.timer1.Interval = 10000;
 			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
+			// barStaticItemVersion
+			// 
+			this.barStaticItemVersion.Caption = "Version";
+			this.barStaticItemVersion.Id = 1;
+			this.barStaticItemVersion.Name = "barStaticItemVersion";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(822, 679);
 			this.Controls.Add(this.layoutControl1);
+			this.Controls.Add(this.barDockControlLeft);
+			this.Controls.Add(this.barDockControlRight);
+			this.Controls.Add(this.barDockControlBottom);
+			this.Controls.Add(this.barDockControlTop);
 			this.IconOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("MainForm.IconOptions.SvgImage")));
 			this.Name = "MainForm";
 			this.Text = "Fbox Lan-Devices Monitor";
 			this.Load += new System.EventHandler(this.Form1_Load);
 			((System.ComponentModel.ISupportInitialize)(this.gridControlDevices)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridViewDevices)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
 			this.layoutControl1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.checkEditAutoRefresh.Properties)).EndInit();
@@ -461,6 +550,7 @@ namespace FboxLanDevicesMonitor
 			((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -501,6 +591,14 @@ namespace FboxLanDevicesMonitor
 		private DevExpress.XtraEditors.LabelControl labelControl1;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
 		private DevExpress.Utils.ToolTipController toolTipController1;
+		private DevExpress.XtraBars.BarManager barManager1;
+		private DevExpress.XtraBars.Bar bar3;
+		private DevExpress.XtraBars.BarDockControl barDockControlTop;
+		private DevExpress.XtraBars.BarDockControl barDockControlBottom;
+		private DevExpress.XtraBars.BarDockControl barDockControlLeft;
+		private DevExpress.XtraBars.BarDockControl barDockControlRight;
+		private DevExpress.XtraBars.BarStaticItem barStaticItemLoggingTo;
+		private DevExpress.XtraBars.BarStaticItem barStaticItemVersion;
 	}
 }
 

@@ -24,6 +24,8 @@ using FboxLanDevicesMonitor.Properties;
 
 using FboxSharp;
 
+using Microsoft.Extensions.Logging;
+
 using PS.FritzBox.API;
 using PS.FritzBox.API.LANDevice;
 //using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -62,25 +64,40 @@ namespace FboxLanDevicesMonitor
 		private IReadOnlyList<FboxLogEntry>? _logLines;
 		private DiffResults<HostEntryVM, string[]>? _devicesDiffResult;
 
-
 		public MainForm()
 		{
 			InitializeComponent();
 			s_mainFormInstance = this;
 			_credManTarget = ConfigurationManager.AppSettings["CredentialManagerTarget"];
+
+			//todo: use Serilog instead? -> AddSerilog()
+			var factory = LoggerFactory.Create(builder => builder.AddDebug());
+			ILogger logger = factory.CreateLogger("FboxLanDevicesMonitor");
+			Helpers.Logger = logger;
+			barStaticItemLoggingTo.Caption = "Logging To: Debug.WriteLine";
+
+			string productVersion = Application.ProductVersion;
+			logger.LogInformation("Application Version: {@version}", productVersion);
+			barStaticItemVersion.Caption = productVersion.Split('+')[0]; // remove "source control metadata suffix"
 		}
 
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
 
-			base.Text += " " + Application.ProductVersion;
 		}
 
 		private async void Form1_Load(object sender, EventArgs e)
 		{
-			CreateConnectionSettingsAndFboxClient();
-			await LoadAndDevicesShowData();
+			try
+			{
+				CreateConnectionSettingsAndFboxClient();
+				await LoadAndDevicesShowData().ConfigureAwait(true);
+			}
+			catch (Exception ex)
+			{
+				ShowMessageBox("Form1_Load failed: " + ex);
+			}
 		}
 
 		private void CreateConnectionSettingsAndFboxClient()
@@ -115,7 +132,7 @@ namespace FboxLanDevicesMonitor
 
 			gridViewDevices.LoadingPanelVisible = true;
 
-			List<HostEntry> tmp = await Helpers.GetAllHosts(psSettings);
+			List<HostEntry> tmp = await Helpers.GetAllHosts(psSettings).ConfigureAwait(true);
 			_currentDevicesList = tmp.Select(i => new HostEntryVM(i)).ToList();
 			gridControlDevices.DataSource = _currentDevicesList;
 
@@ -151,6 +168,7 @@ namespace FboxLanDevicesMonitor
 				else
 				{
 					dict.Add(hostEntry.MACAddress, hostEntry);
+					result.Add(hostEntry);
 				}
 			}
 			messages = stringBuilder.ToString();
@@ -170,12 +188,13 @@ namespace FboxLanDevicesMonitor
 			{
 				//Cursor.Current = Cursors.WaitCursor;
 				ConnectionSettings psSettings = Helpers.ConvertToPsapiConnectionSettings(_connectionSettings);
-				List<HostEntry> newList = await Helpers.GetAllHosts(psSettings);
+				List<HostEntry> newList = await Helpers.GetAllHosts(psSettings).ConfigureAwait(true);
 				List<HostEntryVM> newDevicesList = newList.Select(i => new HostEntryVM(i)).ToList();
 				List<HostEntryVM> currentDevicesList = _currentDevicesList ?? new List<HostEntryVM>();
 				List<HostEntryVM> filteredCurrentDevices = FilterUniqueMacAddresses(currentDevicesList, out string messages);
 				DiffResults<HostEntryVM, string[]> diffResult =
-					ListDiffer.ListsDiff(currentDevicesList, newDevicesList, (HostEntryVM he) => he.MACAddress, HostEntryVM.ListDiffComparer);
+					ListDiffer.ListsDiff(filteredCurrentDevices, newDevicesList, (HostEntryVM he) => he.MACAddress, HostEntryVM.ListDiffComparer);
+
 				labelControl1.Text = $"{DateTime.Now.ToLongTimeString()} - {diffResult.Added.Count()} added - {diffResult.Removed.Count()} removed - {diffResult.Changed.Count()} changed";
 				labelControl1.ToolTip = Helpers.GetTooltipText(diffResult);
 
@@ -188,6 +207,10 @@ namespace FboxLanDevicesMonitor
 				_currentDevicesList = newDevicesList;
 				gridControlDevices.DataSource = _currentDevicesList;
 			}
+			catch (Exception ex)
+			{
+				ShowMessageBox("RefreshDevices failed: " + ex);
+			}
 			finally
 			{
 				gridViewDevices.LoadingPanelVisible = false;
@@ -198,8 +221,15 @@ namespace FboxLanDevicesMonitor
 
 		private async void simpleButtonRefreshLog_Click(object sender, EventArgs e)
 		{
-			await RefreshLogAsync();
-			simpleButtonRefreshLog.Text = "Refresh From Box";
+			try
+			{
+				await RefreshLogAsync().ConfigureAwait(true);
+				simpleButtonRefreshLog.Text = "Refresh From Box";
+			}
+			catch (Exception ex)
+			{
+				ShowMessageBox("RefreshLogAsync failed: " + ex);
+			}
 		}
 
 		// return value: success
@@ -225,7 +255,7 @@ namespace FboxLanDevicesMonitor
 			bool success = true;
 			try
 			{
-				_logLines = await _fboxClient.GetAllLogEntriesAsync();
+				_logLines = await _fboxClient.GetAllLogEntriesAsync().ConfigureAwait(true);
 				gridControlLog.DataSource = _logLines;
 			}
 			catch (Exception ex)
@@ -345,10 +375,17 @@ namespace FboxLanDevicesMonitor
 
 		private async void timer1_Tick(object sender, EventArgs e)
 		{
-			bool success = await RefreshLogAsync();
-			if (!success)
+			try
 			{
-				checkEditAutoRefresh.Checked = false;
+				bool success = await RefreshLogAsync().ConfigureAwait(true);
+				if (!success)
+				{
+					checkEditAutoRefresh.Checked = false;
+				}
+			}
+			catch (Exception ex)
+			{
+				ShowMessageBox("RefreshLogAsync failed: " + ex);
 			}
 		}
 

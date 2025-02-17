@@ -1,21 +1,29 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using PS.FritzBox.API.LANDevice;
-using PS.FritzBox.API;
-using System.Net;
-using System.Collections;
-using AdysTech.CredentialManager;
-using FboxSharp;
+using System.Windows.Forms;
+
 using DnblCore;
-using System.Reflection;
+
+using FboxSharp;
+
+using Microsoft.Extensions.Logging;
+
+using PS.FritzBox.API;
+using PS.FritzBox.API.LANDevice;
+using PS.FritzBox.API.SOAP;
 
 namespace FboxLanDevicesMonitor
 {
-	internal class Helpers
+	internal static class Helpers
 	{
+		public static ILogger? Logger { get; set; }
+
 
 		public static int CompareIPAddress(IPAddress address1, IPAddress address2)
 		{
@@ -40,8 +48,18 @@ namespace FboxLanDevicesMonitor
 			List<HostEntry> list = new List<HostEntry>();
 			for (ushort index = 0; index < numHosts; index++)
 			{
-				HostEntry he = await hostsClient.GetGenericHostEntryAsync(index);
-				list.Add(he);
+				try
+				{
+					HostEntry he = await hostsClient.GetGenericHostEntryAsync(index);
+					list.Add(he);
+				}
+				catch (SoapFaultException ex)
+				{
+					// this exception sometimes occurs for the last index (only one time I have seen it for the last TWO items)
+					// haven't found a pattern yet to predict when this happens, most of the times the call just works
+					string message = nameof(GetAllHosts) + ": GetGenericHostEntryAsync failed for index {@index} (numHosts {@numHosts})";
+					Logger?.LogWarning(ex, message, index, numHosts);
+				}
 			}
 
 			return list;
@@ -79,7 +97,7 @@ namespace FboxLanDevicesMonitor
 			return toolTip.ToString();
 		}
 
-		static string GetChangedPropertiesText(DiffResultChangedItem<HostEntryVM, string[]> changedEntry)
+		private static string GetChangedPropertiesText(DiffResultChangedItem<HostEntryVM, string[]> changedEntry)
 		{
 			StringBuilder stringBuilder = new StringBuilder();
 			//string.Join(", ", changedEntry.DiffInfo);
