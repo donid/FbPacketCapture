@@ -16,13 +16,13 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
     - name: Build
       run: dotnet build --configuration Release_NoDevExPrjs src\FbPacketCapture.sln
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: FbPacketCapture_release_${{ github.sha }}
         path: |
-          src\FbPacketCapture\bin\Release_NoDevExPrjs\net6.0
-          src\FboxEventLogCollector\bin\Release\net6.0
+          src\FbPacketCapture\bin\Release_NoDevExPrjs\net8.0
+          src\FboxEventLogCollector\bin\Release\net8.0
